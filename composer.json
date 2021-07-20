@@ -1,5 +1,5 @@
 {
-    "name": "beta/bx.router",
+    "name": "beta/bx.logger",
     "description": "PSR-3 logger for Bitrix app",
     "type": "bitrix-module",
     "license": "MIT",
