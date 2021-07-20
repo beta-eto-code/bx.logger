@@ -1,0 +1,17 @@
+{
+    "name": "beta/bx.router",
+    "description": "PSR-3 logger for Bitrix app",
+    "type": "bitrix-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Nesterov",
+            "email": "alex19pov31@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "psr/log": "^1.1.4"
+    }
+}
