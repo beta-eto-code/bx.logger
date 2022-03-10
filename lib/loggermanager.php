@@ -15,7 +15,7 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @var LoggerInterface[]
      */
-    private $logger;
+    private $logger = [];
 
     public function __construct(LoggerInterface $defaultLogger)
     {
@@ -56,12 +56,13 @@ class LoggerManager implements LoggerManagerInterface
     /**
      * @param Throwable $exception
      * @param bool $logTrace
+     * @return void
      */
     public function logException(Throwable $exception, bool $logTrace = false)
     {
         $message = $exception->getMessage();
         if ($logTrace) {
-            $message .= "\n".$exception->getTraceAsString();
+            $message .= "\n" . $exception->getTraceAsString();
         }
 
         $this->error(

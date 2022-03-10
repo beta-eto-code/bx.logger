@@ -30,6 +30,12 @@ class SimpleTextLogger implements LoggerInterface
         $this->messageFormat = $messageFormat ?? '{date} {level}: {message}';
     }
 
+    /**
+     * @param mixed $level
+     * @param mixed $message
+     * @param array $context
+     * @return void
+     */
     public function log($level, $message, array $context = array())
     {
         $fp = fopen($this->filePath, 'ab');
@@ -42,7 +48,7 @@ class SimpleTextLogger implements LoggerInterface
         }
 
         if (is_object($message) && method_exists($message, '__toString') || is_scalar($message)) {
-            $message = (string)$message;
+            $message = (string) $message;
         } else {
             $message = print_r($message, true);
         }
@@ -53,7 +59,7 @@ class SimpleTextLogger implements LoggerInterface
             'message' => $message
         ]);
 
-        fwrite($fp, $message."\n");
+        fwrite($fp, $message . "\n");
         fflush($fp);
         flock($fp, LOCK_UN);
         fclose($fp);

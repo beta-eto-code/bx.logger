@@ -14,7 +14,7 @@ class FileLogger extends AbstractLogger
     public function log($level, $message, array $context = array())
     {
         AddMessage2Log(
-            "{$level}: ".Utils::interpolate($message, $context),
+            "{$level}: " . Utils::interpolate($message, $context),
             $context['MODULE_ID'] ?? '',
             $context['TRACE_DEPTH'] ?? 6,
             $context['SHOW_ARGS'] ?? false
