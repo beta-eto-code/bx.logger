@@ -4,31 +4,34 @@ namespace Bx\Logger;
 
 use Bitrix\Main\Result;
 use Bx\Logger\Interfaces\LoggerManagerInterface;
+use Bx\Logger\Interfaces\TypedLoggerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
+use Stringable;
 use Throwable;
 
 class LoggerManager implements LoggerManagerInterface
 {
     use LoggerTrait;
+    private const DEFAULT_LOG = 'default';
 
     /**
      * @var LoggerInterface[]
      */
-    private $logger = [];
+    private array $logger = [];
 
     public function __construct(LoggerInterface $defaultLogger)
     {
-        $this->logger['default'] = $defaultLogger;
+        $this->logger[$this::DEFAULT_LOG] = $defaultLogger;
     }
 
     /**
      * @param LoggerInterface $logger
-     * @param string $loggerType
      */
-    public function setLogger(LoggerInterface $logger, string $loggerType = 'default')
+    public function setLogger(LoggerInterface $logger): void
     {
-        $this->logger[$loggerType] = $logger;
+        $type = $logger instanceof TypedLoggerInterface ? $logger->getType() : $this::DEFAULT_LOG;
+        $this->logger[$type ?: $this::DEFAULT_LOG] = $logger;
     }
 
     /**
@@ -36,7 +39,7 @@ class LoggerManager implements LoggerManagerInterface
      */
     private function getDefaultLogger(): LoggerInterface
     {
-        return $this->logger['default'];
+        return $this->logger[$this::DEFAULT_LOG];
     }
 
     /**
@@ -96,11 +99,12 @@ class LoggerManager implements LoggerManagerInterface
     }
 
     /**
-     * @param mixed $level
-     * @param string $message
+     * @param $level
+     * @param string|Stringable $message
      * @param array $context
+     * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         $this->getLoggerByType($level)->log($level, $message, $context);
     }

@@ -3,15 +3,17 @@
 namespace Bx\Logger;
 
 use Psr\Log\AbstractLogger;
+use Stringable;
 
 class FileLogger extends AbstractLogger
 {
     /**
-     * @param mixed $level
-     * @param string $message
+     * @param $level
+     * @param string|Stringable $message
      * @param array $context
+     * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         AddMessage2Log(
             "{$level}: " . Utils::interpolate($message, $context),

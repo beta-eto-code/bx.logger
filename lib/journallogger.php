@@ -4,19 +4,19 @@ namespace Bx\Logger;
 
 use Bitrix\Main\Application;
 use Bitrix\Main\EventLog\Internal\EventLogTable;
-use Exception;
 use Psr\Log\AbstractLogger;
+use Stringable;
 
 class JournalLogger extends AbstractLogger
 {
     /**
      * @var string
      */
-    private $defaultModuleId;
+    private string $defaultModuleId;
     /**
      * @var string
      */
-    private $defaultAuditTypeId;
+    private string $defaultAuditTypeId;
 
     public function __construct(string $moduleId = '', string $auditTypeId = '')
     {
@@ -25,12 +25,12 @@ class JournalLogger extends AbstractLogger
     }
 
     /**
-     * @param mixed $level
-     * @param string $message
+     * @param $level
+     * @param string|Stringable $message
      * @param array $context
-     * @throws Exception
+     * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         global $USER;
         $appContext = Application::getInstance()->getContext();
