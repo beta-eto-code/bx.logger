@@ -24,7 +24,7 @@ $simpleTextLogger = new SimpleTextLogger(
     'Y/m/d H:i:s',                                                  // формат даты/времени
     "{date} {level}:\t{message}"                                    // формат сообщения
 )
-$loggerManager = new LoggerManager($simpleTextLogger);              // создаем новый менеджер с логером по-умолчанию
+$loggerManager = new LoggerManager($simpleTextLogger);              // создаем новый менеджер с логером по-умолчанию и типом default
 
 $journalLogger = new JournalLogger('my.module');
 $loggerManager->setLogger($journalLogger, LogLevel::ERROR);         // логи с ошибками будут записаны в журнал событий битрикса
@@ -37,4 +37,7 @@ $loggerManager->error('Some error message', [                       // сооб�
     'ITEM_ID' => 1,
 ]);
 $loggerManager->warning('Some warning message');                    // сообщение будет записано в файл LOG_FILENAME
+
+// создаем новый менеджер с логером по-умолчанию и типом test
+$loggerManager = new LoggerManager(\Bx\Logger\TypedLoggerFactory::createTypedLogger($simpleTextLogger, 'test'));
 ```
