@@ -13,6 +13,7 @@ use Throwable;
 class LoggerManager implements LoggerManagerInterface
 {
     use LoggerTrait;
+
     private const DEFAULT_LOG = 'default';
 
     /**
