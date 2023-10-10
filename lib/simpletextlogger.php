@@ -5,6 +5,7 @@ namespace Bx\Logger;
 use Bitrix\Main\Type\DateTime;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
+use Stringable;
 
 class SimpleTextLogger implements LoggerInterface
 {
@@ -13,15 +14,15 @@ class SimpleTextLogger implements LoggerInterface
     /**
      * @var string
      */
-    private $filePath;
+    private string $filePath;
     /**
      * @var string
      */
-    private $messageFormat;
+    private string $messageFormat;
     /**
      * @var string
      */
-    private $dateFormat;
+    private string $dateFormat;
 
     public function __construct(string $filePath, string $dateFormat = null, string $messageFormat = null)
     {
@@ -36,7 +37,7 @@ class SimpleTextLogger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, string|Stringable $message, array $context = []): void
     {
         $fp = fopen($this->filePath, 'ab');
         if (!$fp) {
